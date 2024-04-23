@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -13,6 +15,7 @@ export class UsersController {
   dataUsers = [];
 
   @Get('')
+  @HttpCode(HttpStatus.ACCEPTED)
   getUsers(): any {
     return this.dataUsers;
   }
