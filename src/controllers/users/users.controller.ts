@@ -8,78 +8,83 @@ import {
   Param,
   Post,
   Put,
+  Query,
+  NotFoundException,
 } from '@nestjs/common';
+
+import { UsersService } from './../../services/users/users.service';
+import { Users } from './../../entities/users/users';
+import { ParseIntPipe } from './../../common/parse-int/parse-int.pipe';
+import { createUserDTO, updateUserDTO } from './../../dto/users.dto';
 
 @Controller('users')
 export class UsersController {
-  dataUsers = [];
+  constructor(private UserServiceImplement: UsersService) {}
 
   @Get('')
-  @HttpCode(HttpStatus.ACCEPTED)
-  getUsers(): any {
-    return this.dataUsers;
+  @HttpCode(HttpStatus.OK)
+  getUsers(@Query('id', ParseIntPipe) id: number): any {
+    if (id !== undefined) {
+      const userFind = this.UserServiceImplement.findOneUser(id);
+
+      if (!userFind) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+
+      return userFind;
+    }
+    return this.UserServiceImplement.findAllUsers();
   }
 
   @Post()
-  createUser(@Body() data: any): any {
+  createUser(@Body() data: createUserDTO): any {
     try {
-      const { nombre, correo, identificacion } = data;
+      const createdUser = this.UserServiceImplement.create(data);
 
-      if (this.createUser.length > 0) {
-        const increment = this.dataUsers.length + 1;
-
-        const schema = {
-          id: increment,
-          nombre,
-          correo,
-          identificacion,
-        };
-
-        const response = this.dataUsers.push(schema);
-        if (!response) {
-          return 'Error al agregar el elemento';
-        }
-        return this.dataUsers;
+      if (!createdUser) {
+        throw new NotFoundException('No fue posible la inserción del usuario');
       }
+
+      return {
+        status: 'Success',
+        msg: `Usuario con id ${createdUser.id} creado con exito`,
+      };
     } catch (error) {
       return error;
     }
   }
 
   @Put(':id')
-  updateUser(@Param('id') id: number, @Body() data: any): any {
+  updateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: updateUserDTO,
+  ): any {
     try {
-      const elementIndex = this.dataUsers.findIndex((user) => user.id == id);
+      const updatedUser = this.UserServiceImplement.updateUser(id, data);
 
-      if (elementIndex === -1) {
-        return 'No se encontro el usuario';
+      if (!updatedUser) {
+        throw new NotFoundException(
+          'No fue posible la actualización del usuario',
+        );
       }
 
-      this.dataUsers[elementIndex] = {
-        ...this.dataUsers[elementIndex],
-        ...data,
+      return {
+        status: 'Success',
+        msg: `Usuario con ${id} actualizado con exito`,
       };
-
-      return this.dataUsers[elementIndex];
     } catch (error) {
       return error;
     }
   }
 
   @Delete(':id')
-  deleteUser(@Param('id') id: number): string {
-    const elementIndex = this.dataUsers.findIndex((user) => user.id === id);
+  deleteUser(@Param('id', ParseIntPipe) id: number): any {
+    const deletedUser = this.UserServiceImplement.deleteUser(id);
 
-    if (elementIndex === -1) {
-      return 'No se encontró el usuario';
+    if (!deletedUser) {
+      throw new NotFoundException('No fue posible la eliminación del usuario');
     }
 
-    const deleted = this.dataUsers.splice(elementIndex, 1);
-
-    if (deleted.length === 0) {
-      return 'No se pudo eliminar el usuario';
-    }
-
-    return `Usuario eliminado con id: ${id}`;
+    return deletedUser;
   }
 }
