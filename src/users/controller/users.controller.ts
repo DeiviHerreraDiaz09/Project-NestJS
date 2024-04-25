@@ -12,11 +12,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { UsersService } from './../../services/users/users.service';
-import { Users } from './../../entities/users/users';
-import { ParseIntPipe } from './../../common/parse-int/parse-int.pipe';
-import { createUserDTO, updateUserDTO } from './../../dto/users.dto';
+import { UsersService } from '../services/users.service';
+import { ParseIntPipe } from '../../common/parse-int/parse-int.pipe';
+import { createUserDTO, updateUserDTO } from '../dto/users.dto';
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Users")
 @Controller('users')
 export class UsersController {
   constructor(private UserServiceImplement: UsersService) {}

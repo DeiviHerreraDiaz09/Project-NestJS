@@ -1,33 +1,36 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Testing Default")
 @Controller()
 export class AppController {
 
-  // Recibir parametros con PARAM
+  // // Receive parameters with Param
 
-  @Get('/prueba/:id')
-  rutaPrueba(@Param('id') id: String): string {
-    return `Esto es una prueba, con id ${id}`;
+  @Get('/testOne/:id')
+  testOne(@Param('id') id: String): string {
+    return `This is a test with id ${id}`;
   }
 
-  @Get('/pruebatwo/:msg')
-  rutaPruebaTwo(@Param('') params: any): string {
-    return `Este es el mensaje: ${params.msg}`;
+  @Get('/testTwo/:msg')
+  testTwo(@Param('') params: any): string {
+    return `this is the message: ${params.msg}`;
   }
 
-  // Recibir parametros con Query
+  // Receive parameters with Query
 
-  @Get('pruebathree')
-  rutaPruebaThree(@Query() params: any): String {
+  @Get('/testThree')
+  testThree(@Query() params: any): String {
     const { limit, offset } = params;
-    return `Productos: limite => ${limit}, offset => ${offset}`;
+    return `Products: Limit => ${limit}, offset => ${offset}`;
   }
 
-  @Get('pruebafour')
-  rutaPruebaFour(@Query('msg') msg: String) {
+  @Get('/testFour')
+  testFour(@Query('msg') msg: String) {
     if (msg) {
-      return `Este es el mensaje: ${msg}`;
+      return `This is the message: ${msg}`;
     }
-    return 'No hay ningún mensaje';
+    return 'There is no message';
   }
+
 }
