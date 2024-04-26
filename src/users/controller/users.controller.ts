@@ -15,21 +15,21 @@ import {
 import { UsersService } from '../services/users.service';
 import { ParseIntPipe } from '../../common/parse-int/parse-int.pipe';
 import { createUserDTO, updateUserDTO } from '../dto/users.dto';
-import { ApiTags } from "@nestjs/swagger";
+import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Users")
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private UserServiceImplement: UsersService) {}
 
   @Get('')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK) IMPLEMENTAR HTTPCODE A TODOS LOS ENDPOINTS 
   getUsers(@Query('id', ParseIntPipe) id: number): any {
     if (id !== undefined) {
       const userFind = this.UserServiceImplement.findOneUser(id);
 
       if (!userFind) {
-        throw new NotFoundException('Usuario no encontrado');
+        throw new NotFoundException('User not found');
       }
 
       return userFind;
@@ -38,9 +38,9 @@ export class UsersController {
   }
 
   @Post()
-  createUser(@Body() data: createUserDTO): any {
+  async createUser(@Body() data: createUserDTO): Promise<any> {
     try {
-      const createdUser = this.UserServiceImplement.create(data);
+      const createdUser = await this.UserServiceImplement.create(data);
 
       if (!createdUser) {
         throw new NotFoundException('No fue posible la inserción del usuario');
@@ -48,7 +48,7 @@ export class UsersController {
 
       return {
         status: 'Success',
-        msg: `Usuario con id ${createdUser.id} creado con exito`,
+        msg: `Usuario creado con exito`,
       };
     } catch (error) {
       return error;
@@ -56,12 +56,12 @@ export class UsersController {
   }
 
   @Put(':id')
-  updateUser(
+  async updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: updateUserDTO,
-  ): any {
+  ): Promise<any> {
     try {
-      const updatedUser = this.UserServiceImplement.updateUser(id, data);
+      const updatedUser = await this.UserServiceImplement.updateUser(id, data);
 
       if (!updatedUser) {
         throw new NotFoundException(

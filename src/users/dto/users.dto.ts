@@ -12,7 +12,7 @@ export class createUserDTO {
 
   @IsString()
   @IsNotEmpty()
-  readonly identification_number: string;
+  readonly identificationNumber: string;
 
   @IsString()
   @IsNotEmpty()

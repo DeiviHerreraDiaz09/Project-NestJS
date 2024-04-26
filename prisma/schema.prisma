@@ -1,0 +1,63 @@
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  identificationNumber String
+  rol String
+  stores Store[] 
+  details_UserProducts Details_UserProducts[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String 
+  products Product[]
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  stock Int
+  price Int
+  category Category @relation(fields: [category_fk], references: [id])
+  category_fk Int
+  details_UserProducts Details_UserProducts[]
+  details_StoreProducts Details_StoreProducts[]
+}
+
+model Store{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  user User @relation(fields: [user_fk], references: [id])
+  user_fk Int
+  details_StoreProducts Details_StoreProducts[]
+}
+
+model Details_UserProducts{
+    id Int @id @default(autoincrement())
+    user User @relation(fields: [user_fk], references: [id])
+    user_fk Int
+    product Product @relation(fields: [product_fk], references: [id])
+    product_fk Int
+    time_registration DateTime @default(now())
+}
+
+model Details_StoreProducts{
+  id Int @id @default(autoincrement())
+  store Store @relation(fields: [store_fk], references: [id])
+  store_fk Int
+  product Product @relation(fields: [product_fk], references: [id])
+  product_fk Int
+  time_registration DateTime @default(now())
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}

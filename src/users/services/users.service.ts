@@ -1,68 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { Users } from '../entities/users';
-import { createUserDTO, updateUserDTO } from "../dto/users.dto"
+import { PrismaClient } from '@prisma/client';
+import { createUserDTO, updateUserDTO } from '../dto/users.dto';
 
 @Injectable()
 export class UsersService {
-  private counterId = 1;
+  private prisma: PrismaClient;
 
-  private UsersData: Users[] = [
-    {
-      id: 1,
-      name: 'Deivi',
-      email: 'd@g.com',
-      identification_number: '123456789',
-      rol: 'Administrador',
-    },
-  ];
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
 
   findAllUsers() {
-    return this.UsersData;
+    return this.prisma.user.findMany();
   }
 
   findOneUser(id: number) {
-    return this.UsersData.find((usuario) => usuario.id == id);
+    return this.prisma.user.findUnique({ where: { id } });
   }
 
   create(data: createUserDTO) {
-    this.counterId += 1;
-
-    const newUser = {
-      id: this.counterId,
-      ...data,
-    };
-
-    this.UsersData.push(newUser);
-
-    return newUser;
+    return this.prisma.user.create({ data });
   }
 
   updateUser(id: number, data: updateUserDTO) {
-    const elementIndex = this.UsersData.findIndex((user) => user.id == id);
-
-    if (elementIndex === -1) {
-      return 'No se encontró el usuario';
-    }
-
-    this.UsersData[elementIndex] = {
-      ...this.UsersData[elementIndex],
-      ...data,
-    };
-
-    return this.UsersData[elementIndex];
+    return this.prisma.user.update({ where: { id }, data });
   }
 
   deleteUser(id: number) {
-    const elementIndex = this.UsersData.findIndex((user) => user.id == id);
-
-    if (elementIndex === -1) {
-      return 'No se encontró el usuario';
-    }
-
-    this.UsersData.splice(elementIndex, 1);
-
-    return {
-      msg: 'Usuario eliminado con exito',
-    };
+    return this.prisma.user.delete({ where: { id } });
   }
 }
