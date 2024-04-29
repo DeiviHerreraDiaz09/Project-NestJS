@@ -23,8 +23,8 @@ export class UsersController {
   constructor(private UserServiceImplement: UsersService) {}
 
   @Get('')
-  // @HttpCode(HttpStatus.OK) IMPLEMENTAR HTTPCODE A TODOS LOS ENDPOINTS 
-  getUsers(@Query('id', ParseIntPipe) id: number): any {
+  // @HttpCode(HttpStatus.OK) IMPLEMENTAR HTTPCODE A TODOS LOS ENDPOINTS
+  getUsers(@Query('id', ParseIntPipe) id: number) {
     if (id !== undefined) {
       const userFind = this.UserServiceImplement.findOneUser(id);
 
@@ -38,17 +38,17 @@ export class UsersController {
   }
 
   @Post()
-  async createUser(@Body() data: createUserDTO): Promise<any> {
+  async createUser(@Body() data: createUserDTO) {
     try {
-      const createdUser = await this.UserServiceImplement.create(data);
+      const createdUser = await this.UserServiceImplement.createUser(data);
 
       if (!createdUser) {
-        throw new NotFoundException('No fue posible la inserción del usuario');
+        throw new NotFoundException('It was not possible to create the user');
       }
 
       return {
         status: 'Success',
-        msg: `Usuario creado con exito`,
+        msg: `User successfully created`,
       };
     } catch (error) {
       return error;
@@ -59,19 +59,17 @@ export class UsersController {
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: updateUserDTO,
-  ): Promise<any> {
+  ) {
     try {
       const updatedUser = await this.UserServiceImplement.updateUser(id, data);
 
       if (!updatedUser) {
-        throw new NotFoundException(
-          'No fue posible la actualización del usuario',
-        );
+        throw new NotFoundException('It was not possible to update the user');
       }
 
       return {
         status: 'Success',
-        msg: `Usuario con ${id} actualizado con exito`,
+        msg: `user ${id} successfully updated`,
       };
     } catch (error) {
       return error;
@@ -83,7 +81,7 @@ export class UsersController {
     const deletedUser = this.UserServiceImplement.deleteUser(id);
 
     if (!deletedUser) {
-      throw new NotFoundException('No fue posible la eliminación del usuario');
+      throw new NotFoundException('It was not possible to delete the user');
     }
 
     return deletedUser;

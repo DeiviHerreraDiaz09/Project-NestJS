@@ -18,7 +18,7 @@ export class UsersService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  create(data: createUserDTO) {
+  createUser(data: createUserDTO) {
     return this.prisma.user.create({ data });
   }
 
