@@ -31,7 +31,6 @@ export class UsersController {
       if (!userFind) {
         throw new NotFoundException('User not found');
       }
-
       return userFind;
     }
     return this.UserServiceImplement.findAllUsers();
@@ -45,7 +44,6 @@ export class UsersController {
       if (!createdUser) {
         throw new NotFoundException('It was not possible to create the user');
       }
-
       return {
         status: 'Success',
         msg: `User successfully created`,
@@ -66,7 +64,6 @@ export class UsersController {
       if (!updatedUser) {
         throw new NotFoundException('It was not possible to update the user');
       }
-
       return {
         status: 'Success',
         msg: `user ${id} successfully updated`,
@@ -79,11 +76,9 @@ export class UsersController {
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number): any {
     const deletedUser = this.UserServiceImplement.deleteUser(id);
-
     if (!deletedUser) {
       throw new NotFoundException('It was not possible to delete the user');
     }
-
     return deletedUser;
   }
 }

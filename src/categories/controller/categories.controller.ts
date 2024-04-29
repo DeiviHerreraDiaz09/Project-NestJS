@@ -28,10 +28,8 @@ export class CategoriesController {
         if (!categoryFind) {
           throw new NotFoundException('Category not found');
         }
-
         return categoryFind;
       }
-
       return this.categoriesService.findAllCategories();
     } catch (error) {
       return error;
@@ -66,31 +64,32 @@ export class CategoriesController {
         id,
         data,
       );
-
       if (!updateCategory) {
         throw new NotFoundException(
           'It was not possible to update the category',
         );
       }
-
       return {
         status: 'Success',
-        msg: `category ${id} successfully updated`,
+        msg: `Category ${id} successfully updated`,
       };
     } catch (error) {
-      console.error(error);
-      throw error;
+      return error;
     }
   }
 
   @Delete(':id')
   deleteCategory(@Param('id', ParseIntPipe) id: number) {
-    const deletedCategory = this.categoriesService.deleteCategory(id);
-
-    if (!deletedCategory) {
-      throw new NotFoundException('It was not possible to delete the category');
+    try {
+      const deletedCategory = this.categoriesService.deleteCategory(id);
+      if (!deletedCategory) {
+        throw new NotFoundException(
+          'It was not possible to delete the category',
+        );
+      }
+      return deletedCategory;
+    } catch (error) {
+      return error;
     }
-
-    return deletedCategory;
   }
 }
