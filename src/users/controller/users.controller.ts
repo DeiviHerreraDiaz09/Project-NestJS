@@ -14,7 +14,11 @@ import {
 
 import { UsersService } from '../services/users.service';
 import { ParseIntPipe } from '../../common/parse-int/parse-int.pipe';
-import { createUserDTO, updateUserDTO } from '../dto/users.dto';
+import {
+  createUserDTO,
+  updateUserDTO,
+  createDetails_UserProductDTO,
+} from '../dto/users.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
@@ -23,7 +27,6 @@ export class UsersController {
   constructor(private UserServiceImplement: UsersService) {}
 
   @Get('')
-  // @HttpCode(HttpStatus.OK) IMPLEMENTAR HTTPCODE A TODOS LOS ENDPOINTS
   getUsers(@Query('id', ParseIntPipe) id: number) {
     if (id !== undefined) {
       const userFind = this.UserServiceImplement.findOneUser(id);
@@ -36,7 +39,25 @@ export class UsersController {
     return this.UserServiceImplement.findAllUsers();
   }
 
-  @Post()
+  @Get('/Details_UserProducts')
+  getDetails(@Query('id', ParseIntPipe) id: number) {
+    try {
+      if (id !== undefined) {
+        const detailFind = this.UserServiceImplement.findOneDetail(id);
+
+        if (!detailFind) {
+          throw new NotFoundException('Detail not found');
+        }
+        return detailFind;
+      }
+
+      return this.UserServiceImplement.findAllDetails();
+    } catch (error) {
+      return error;
+    }
+  }
+
+  @Post('')
   async createUser(@Body() data: createUserDTO) {
     try {
       const createdUser = await this.UserServiceImplement.createUser(data);
@@ -47,6 +68,26 @@ export class UsersController {
       return {
         status: 'Success',
         msg: `User successfully created`,
+      };
+    } catch (error) {
+      return error;
+    }
+  }
+
+  @Post('Details_UserProducts')
+  async createDetail(@Body() data: createDetails_UserProductDTO) {
+    try {
+      const createdDetail = await this.UserServiceImplement.createDetail(data);
+
+      if (!createdDetail) {
+        throw new NotFoundException(
+          'it was not possible to create the store detail',
+        );
+      }
+
+      return {
+        status: 'success',
+        msg: 'successfully created detail',
       };
     } catch (error) {
       return error;
@@ -80,5 +121,14 @@ export class UsersController {
       throw new NotFoundException('It was not possible to delete the user');
     }
     return deletedUser;
+  }
+
+  @Delete('Details_UserProducts/:id')
+  deleteDetail(@Param('id', ParseIntPipe) id: number): any {
+    const deletedDetail = this.UserServiceImplement.deleteDetail(id);
+    if (!deletedDetail) {
+      throw new NotFoundException('It was not possible to delete the detail');
+    }
+    return deletedDetail;
   }
 }

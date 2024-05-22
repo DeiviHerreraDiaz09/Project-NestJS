@@ -1,10 +1,9 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiTags } from "@nestjs/swagger";
+import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Testing Default")
+@ApiTags('Testing Default')
 @Controller()
 export class AppController {
-
   // // Receive parameters with Param
 
   @Get('/testOne/:id')
@@ -32,5 +31,4 @@ export class AppController {
     }
     return 'There is no message';
   }
-
 }

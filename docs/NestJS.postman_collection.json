@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "c9879327-f78f-455b-83e6-b028b0a45330",
 		"name": "NestJS",
+		"description": "ApiRest NestJS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31959677",
 		"_collection_link": "https://dark-station-678106.postman.co/workspace/New-Team-Workspace~ae858807-7f8b-4845-8d7c-904e4bb90d02/collection/31959677-c9879327-f78f-455b-83e6-b028b0a45330?action=share&source=collection_link&creator=31959677"
@@ -36,7 +37,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Lacteos\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Proteina\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -64,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Carnesssss\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Proteinas\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -106,11 +107,88 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Crud Complete"
 		},
 		{
 			"name": "Users",
 			"item": [
+				{
+					"name": "Relation user-products",
+					"item": [
+						{
+							"name": "List details user-products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/users/Details_UserProducts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"Details_UserProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create details user-products",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_fk\": 2,\r\n    \"product_fk\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/Details_UserProducts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"Details_UserProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete details user-products (Optional)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/users/Details_UserProducts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"Details_UserProducts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Crud complete"
+				},
 				{
 					"name": "List Users",
 					"request": {
@@ -147,7 +225,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Juan\",\r\n    \"email\": \"J@g.com\",\r\n    \"identificationNumber\": \"1234567891\",\r\n    \"rol\": \"Cliente\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Deivi\",\r\n    \"email\": \"h@g.com\",\r\n    \"identificationNumber\": \"1234567891\",\r\n    \"rol\": \"Cliente\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -176,7 +254,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Albeiro\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Deivi Herrera\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +282,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users/2",
+							"raw": "http://localhost:3000/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -212,13 +290,14 @@
 							"port": "3000",
 							"path": [
 								"users",
-								"2"
+								"1"
 							]
 						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Crud complete"
 		},
 		{
 			"name": "Products",
@@ -249,7 +328,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Bom Bom Bum 2\",\r\n    \"description\": \"Bombon relleno de chicle\",\r\n    \"stock\": 5,\r\n    \"price\": 1500,\r\n    \"category_fk\": 2\r\n}",
+							"raw": "{\r\n    \"name\": \"Lomo\",\r\n    \"description\": \"Trozo de proteina\",\r\n    \"stock\": 5,\r\n    \"price\": 1500,\r\n    \"category_fk\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,7 +356,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Prueba dulce\",\r\n    \"description\": \"Bombon relleno de chicle\",\r\n    \"stock\": 5,\r\n    \"price\": 1500,\r\n    \"category_fk\": 2\r\n}",
+							"raw": "{\r\n    \"description\": \"Trozo de carne\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -285,7 +364,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/products/5",
+							"raw": "http://localhost:3000/products/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -293,7 +372,7 @@
 							"port": "3000",
 							"path": [
 								"products",
-								"5"
+								"1"
 							]
 						}
 					},
@@ -305,7 +384,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/products/5",
+							"raw": "http://localhost:3000/products/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -313,13 +392,192 @@
 							"port": "3000",
 							"path": [
 								"products",
-								"5"
+								"1"
 							]
 						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Crud complete"
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "Relation store-products",
+					"item": [
+						{
+							"name": "List details store-products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/stores/Details_StoreProducts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"stores",
+										"Details_StoreProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create details store-products",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store_fk\": 2,\r\n    \"product_fk\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/stores/Details_StoreProducts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"stores",
+										"Details_StoreProducts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete details store-products (Optional)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/stores/Details_StoreProducts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"stores",
+										"Details_StoreProducts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Crud complete"
+				},
+				{
+					"name": "List Stores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Carniceria\",\r\n    \"description\": \"Tienda de alimentos\",\r\n    \"user_fk\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tienda de alimentos frescos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/stores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Store",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/stores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Crud complete"
 		}
 	]
 }
